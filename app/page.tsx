@@ -35,8 +35,20 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetchData();
-    const interval = setInterval(fetchData, 30000); // refresh every 30s
+    // Only auto-refresh 7am–7pm ET, every 5 minutes
+    function isWithinTournamentHours(): boolean {
+      const now = new Date();
+      const et = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
+      const hour = et.getHours();
+      return hour >= 7 && hour < 19;
+    }
+
+    fetchData(); // always fetch once on load
+    const interval = setInterval(() => {
+      if (isWithinTournamentHours()) {
+        fetchData();
+      }
+    }, 300000); // 5 minutes
     return () => clearInterval(interval);
   }, [fetchData]);
 
@@ -127,7 +139,7 @@ export default function Home() {
       <footer className="border-t border-[#1a2e1a] px-4 py-4 mt-8">
         <div className="max-w-5xl mx-auto text-center">
           <p className="font-ibm-plex-mono text-xs text-[#7a8a7a]">
-            Best 4 of 8 golfers count &middot; Auto-refreshes every 30s &middot; Data via ESPN
+            Best 4 of 8 golfers count &middot; Updates every 5 min (7am&ndash;7pm ET) &middot; Data via ESPN
           </p>
         </div>
       </footer>
