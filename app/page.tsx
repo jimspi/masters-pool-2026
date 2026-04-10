@@ -46,7 +46,16 @@ export default function Home() {
       <header className="border-b border-[#1a2e1a] px-4 py-6">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div>
+            <div className="flex items-center gap-4">
+              {/* Logo */}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0">
+                <rect width="512" height="512" fill="#0a120a"/>
+                <line x1="195" y1="52" x2="195" y2="350" stroke="#f0ece0" strokeWidth="8" strokeLinecap="square"/>
+                <polygon points="196,52 370,142 196,232" fill="#f5d77a"/>
+                <ellipse cx="195" cy="365" rx="82" ry="18" fill="#1a3a1a"/>
+                <text x="256" y="460" textAnchor="middle" fontFamily="Georgia,serif" fontWeight="bold" fontSize="80" fill="#f5d77a" letterSpacing="6">MP</text>
+              </svg>
+              <div>
               <h1 className="font-playfair text-3xl sm:text-4xl text-[#f5d77a] tracking-wide">
                 MASTERS POOL 2026
               </h1>
@@ -58,6 +67,7 @@ export default function Home() {
                   />
                 </div>
               )}
+              </div>
             </div>
             <div className="text-right">
               {refreshing && (

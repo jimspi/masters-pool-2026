@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0a120a"/>
+  <!-- Flag pole -->
+  <line x1="256" y1="80" x2="256" y2="380" stroke="#f0ece0" stroke-width="8" stroke-linecap="square"/>
+  <!-- Flag -->
+  <polygon points="260,80 360,115 260,150" fill="#f5d77a"/>
+  <!-- Cup/hole -->
+  <ellipse cx="256" cy="390" rx="80" ry="18" fill="#1a3a1a" stroke="#2a5a2a" stroke-width="2"/>
+  <!-- MP text -->
+  <text x="256" y="470" text-anchor="middle" font-family="serif" font-weight="bold" font-size="72" fill="#f5d77a" letter-spacing="8">MP</text>
+  <!-- Year -->
+  <text x="256" y="510" text-anchor="middle" font-family="sans-serif" font-size="28" fill="#7a8a7a" letter-spacing="4">2026</text>
+</svg>
