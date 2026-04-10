@@ -6,7 +6,6 @@ import { formatTimestamp } from "@/lib/utils";
 import LiveBadge from "@/components/LiveBadge";
 import PoolLeaderboard from "@/components/PoolLeaderboard";
 import PlayerScorecard from "@/components/PlayerScorecard";
-import CommentaryPanel from "@/components/CommentaryPanel";
 
 export default function Home() {
   const [poolState, setPoolState] = useState<PoolState | null>(null);
@@ -37,7 +36,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 60000);
+    const interval = setInterval(fetchData, 30000); // refresh every 30s
     return () => clearInterval(interval);
   }, [fetchData]);
 
@@ -98,9 +97,6 @@ export default function Home() {
             {/* Pool Leaderboard */}
             <PoolLeaderboard players={poolState.players} />
 
-            {/* Commentary */}
-            <CommentaryPanel poolState={poolState} />
-
             {/* Individual Scorecards */}
             <div className="space-y-4">
               <h2 className="font-oswald text-xs text-[#7a8a7a] tracking-[0.2em] uppercase">
@@ -121,7 +117,7 @@ export default function Home() {
       <footer className="border-t border-[#1a2e1a] px-4 py-4 mt-8">
         <div className="max-w-5xl mx-auto text-center">
           <p className="font-ibm-plex-mono text-xs text-[#7a8a7a]">
-            Best 4 of 8 golfers count &middot; Auto-refreshes every 60s &middot; Data via ESPN
+            Best 4 of 8 golfers count &middot; Auto-refreshes every 30s &middot; Data via ESPN
           </p>
         </div>
       </footer>

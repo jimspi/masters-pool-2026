@@ -5,19 +5,20 @@ export interface PoolGolferScore {
   poolName: string;
   espnName: string | null;
   matched: boolean;
-  score: number; // to par
-  rounds: (number | null)[];
+  score: number; // cumulative to par
+  rounds: (number | null)[]; // stroke totals per round
+  roundsToPar: (number | null)[]; // to-par per round
   status: "active" | "cut" | "wd" | "dq";
   thru: string;
-  position: string;
+  position: number;
   counting: boolean;
 }
 
 export interface PoolPlayer {
   name: string;
   golfers: PoolGolferScore[];
-  total: number; // sum of 4 lowest scores
-  roundTotals: (number | null)[]; // R1-R4 pool totals
+  total: number; // sum of 4 lowest cumulative to-par scores
+  roundTotals: (number | null)[]; // R1-R4 pool totals (stroke totals of best 4)
   rank: number;
   rankDisplay: string; // "1", "T2", etc.
 }
@@ -96,7 +97,7 @@ function calculateRoundTotal(
 
   if (roundScores.length === 0) return null;
 
-  // Sort ascending, take lowest 4 (or all if fewer than 4)
+  // Sort ascending, take lowest 4 stroke totals
   roundScores.sort((a, b) => a - b);
   const counting = roundScores.slice(0, Math.min(4, roundScores.length));
   return counting.reduce((sum, s) => sum + s, 0);
@@ -123,9 +124,10 @@ export function calculatePoolState(
           matched: false,
           score: 0,
           rounds: [null, null, null, null],
+          roundsToPar: [null, null, null, null],
           status: "active" as const,
           thru: "--",
-          position: "--",
+          position: 0,
           counting: false,
         };
       }
@@ -136,14 +138,15 @@ export function calculatePoolState(
         matched: true,
         score: espnGolfer.score,
         rounds: espnGolfer.rounds,
+        roundsToPar: espnGolfer.roundsToPar,
         status: espnGolfer.status,
         thru: espnGolfer.thru,
         position: espnGolfer.position,
-        counting: false, // calculated below
+        counting: false,
       };
     });
 
-    // Determine counting golfers: 4 lowest scores
+    // Determine counting golfers: 4 lowest cumulative to-par scores
     const matchedGolfers = golferScores.filter((g) => g.matched);
     const sorted = [...matchedGolfers].sort((a, b) => a.score - b.score);
     const countingGolfers = sorted.slice(0, 4);
@@ -153,10 +156,10 @@ export function calculatePoolState(
       g.counting = countingNames.has(g.poolName);
     }
 
-    // Total = sum of 4 lowest
+    // Total = sum of 4 lowest cumulative to-par scores
     const total = countingGolfers.reduce((sum, g) => sum + g.score, 0);
 
-    // Round totals
+    // Round totals (stroke totals of best 4 per round)
     const roundTotals: (number | null)[] = [0, 1, 2, 3].map((i) =>
       calculateRoundTotal(golferScores, i)
     );
@@ -184,7 +187,6 @@ export function calculatePoolState(
     currentRank = i + 2;
   }
 
-  // Generate display rank (with T for ties)
   const rankCounts = new Map<number, number>();
   for (const p of players) {
     rankCounts.set(p.rank, (rankCounts.get(p.rank) || 0) + 1);

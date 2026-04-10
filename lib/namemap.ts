@@ -2,19 +2,14 @@
 export const NAME_MAP: Record<string, string[]> = {
   "Cameron Smith": ["Cam Smith", "Cameron Smith"],
   "Robert MacIntyre": ["Bob MacIntyre", "Robert MacIntyre"],
-  "Rasmus Neergaard-Petersen": ["Rasmus Neergaard-Petersen", "Rasmus Hojgaard"],
+  "Rasmus Neergaard-Petersen": ["Rasmus Neergaard-Petersen", "Rasmus Højgaard", "Rasmus Hojgaard"],
   "Ludvig Aberg": ["Ludvig Åberg", "Ludvig Aberg"],
   "Nicolai Hojgaard": ["Nicolai Højgaard", "Nicolai Hojgaard"],
   "Aldrich Potgeiter": ["Aldrich Potgieter", "Aldrich Potgeiter"],
   "Nico Echavarria": ["Nico Echavarría", "Nico Echavarria"],
   "Angel Cabrera": ["Ángel Cabrera", "Angel Cabrera"],
   "JJ Spaun": ["J.J. Spaun", "JJ Spaun"],
-  "Sepp Straka": ["Sepp Straka"],
-  "Zach Johnson": ["Zach Johnson"],
-  "Gary Woodland": ["Gary Woodland"],
-  "Patrick Campbell": ["Patrick Campbell"],
-  "Michael Kim": ["Michael Kim"],
-  "Danny Willett": ["Danny Willett"],
+  "Patrick Campbell": ["Brian Campbell", "Patrick Campbell"],
 };
 
 /**
@@ -73,7 +68,6 @@ export function findEspnName(
     const espnFirst = espnParts[0];
 
     if (espnLast === poolLast) {
-      // Last name matches — check first name
       if (espnFirst === poolFirst || espnFirst.startsWith(poolFirst) || poolFirst.startsWith(espnFirst)) {
         candidates.push(espnName);
       }

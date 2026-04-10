@@ -55,7 +55,9 @@ export default function GolferRow({ golfer }: GolferRowProps) {
             {statusBadge}
           </span>
         ) : (
-          <span className="text-[#7a8a7a]">{golfer.position}</span>
+          <span className="text-[#7a8a7a]">
+            {golfer.position > 0 ? golfer.position : "--"}
+          </span>
         )}
       </td>
       <td className="py-2 px-2 text-center">

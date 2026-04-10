@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { fetchEspnLeaderboard } from "@/lib/espn";
 import { calculatePoolState, PoolState } from "@/lib/pool";
 
+// Force dynamic — never statically cache this route
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 let cachedState: PoolState | null = null;
 
 export async function GET() {
@@ -9,7 +13,6 @@ export async function GET() {
     const espnData = await fetchEspnLeaderboard();
 
     if (!espnData) {
-      // Return cached or empty state
       if (cachedState) {
         return NextResponse.json({
           ...cachedState,
