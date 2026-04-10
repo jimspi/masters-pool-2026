@@ -2,26 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #0a120a;
+  color: #f0ece0;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Remove all rounded corners */
+* {
+  border-radius: 0 !important;
+}
+
+/* Font utility classes using CSS variables from next/font */
+.font-playfair {
+  font-family: var(--font-playfair), serif;
+}
+
+.font-ibm-plex-mono {
+  font-family: var(--font-ibm-plex-mono), monospace;
+}
+
+.font-oswald {
+  font-family: var(--font-oswald), sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a120a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a2e1a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2a4e2a;
 }

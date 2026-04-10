@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Masters Pool 2026
 
-## Getting Started
+Live Masters Tournament pool tracker for 4 players (Steve, Jimmy, Dave, Aaron).
 
-First, run the development server:
+## Scoring Logic
+
+- Each player drafted 8 golfers
+- Only the **4 lowest scores** (best 4 of 8) count toward a player's total
+- Lower total = better position
+- MC/WD/DQ golfers keep their score at time of exit
+- Counting golfers are highlighted with a gold checkmark
+
+## Name Matching
+
+ESPN player names may differ from pool draft names. The app uses:
+1. Exact normalized match (strips accents, periods, case)
+2. Manual override map in `lib/namemap.ts`
+3. Last name + first name substring fuzzy match
+
+Unmatched golfers show an amber "NOT FOUND" warning in the UI.
+
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bash setup.sh
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Or manually:
+```bash
+npm install
+cp .env.local.example .env.local
+# Edit .env.local with your OpenAI API key
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+bash deploy.sh
+```
 
-## Learn More
+## Updating OpenAI Key in Vercel
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+vercel env rm OPENAI_API_KEY production
+echo "sk-your-new-key" | vercel env add OPENAI_API_KEY production
+vercel --prod
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- ESPN API (no key needed)
+- OpenAI GPT-4o for commentary
